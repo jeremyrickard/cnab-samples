@@ -6,8 +6,8 @@ Sample CNAB Bundles
 
 * [Spring Music Java app with AKS and Cosmos DB (Duffle)](spring-music/README.md)
 * [Spring Music Java app with AKS and Cosmos DB (Porter)](spring-music-porter/README.md)
-* [Drones Demo with Kafka, AKS, and Cosmos DB](drones/README.md)
-* [GeoJSON Flight Tracker with AKS and Cosmos DB](service-tracker/README.md)
+* Drones Demo with Kafka, AKS, and Cosmos DB (Coming Soon)
+* GeoJSON Flight Tracker with AKS and Cosmos DB (Coming Soon)
 
 
 
