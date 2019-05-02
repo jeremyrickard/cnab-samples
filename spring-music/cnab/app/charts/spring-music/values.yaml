@@ -3,7 +3,7 @@
 deploy:
   replicas: 1
   image: "chzbrgr71/spring-music"
-  imageTag: "v2"
+  imageTag: "v4"
   containerPort: 8080
   cosmosConnectString: "dynamic"
 

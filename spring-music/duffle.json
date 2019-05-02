@@ -23,28 +23,28 @@
     },
     "parameters": {
       "cluster_name": {
-        "defaultValue": "briar-aks-cnab-demo-4",
+        "defaultValue": "briar-aks-cnab-demo-5",
         "type": "string",
         "destination": {
           "env": "CLUSTER_NAME"
         }
       },
       "aks_resource_group": {
-        "defaultValue": "cnab-bundle-demo40",
+        "defaultValue": "cnab-bundle-demo50",
         "type": "string",
         "destination": {
           "env": "AKS_RESOURCE_GROUP"
         }
       },
       "app_resource_group": {
-        "defaultValue": "cnab-bundle-demo40",
+        "defaultValue": "cnab-bundle-demo50",
         "type": "string",
         "destination": {
           "env": "APP_RESOURCE_GROUP"
         }
       },
       "cosmosdb_service_name": {
-        "defaultValue": "briarmusic240",
+        "defaultValue": "briarmusic250",
         "type": "string",
         "destination": {
           "env": "COSMOSDB_SERVICE_NAME"

@@ -2,19 +2,34 @@
 
 ## Prerequistes
 
-- Azure Kubernetes Service  (AKS) is already installed
+- Duffle on local machine. https://github.com/deislabs/duffle
+- Docker on local machine (eg - Docker for Mac)
+- Bash
+- Azure service principal with rights to create a RG, AKS, Cosmos, etc. 
 
-## Install this bundle
+    ```bash
+    az ad sp create-for-rbac --name ServicePrincipalName
+    ```
 
-```bash
-duffle build .
+More details here: https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli?view=azure-cli-latest 
 
-duffle credentials generate foo -f bundle.json --insecure
-duffle credential generate azure spring-music
-# enter values for clientid, pwd, sub, tenant
+## Build / Install this bundle
 
-duffle install --credentials=azure3 spring-music spring-music:0.1.0
-```
+* Setup duffle credential set
 
+    ```bash
+    duffle credential generate azure spring-music
+    # enter values for clientid, pwd, sub, tenant
+    # or create local env variables
+    ```
+ * Build bundle 
 
-## Considerations for future iterations of this bundle
+    ```bash
+    duffle build .
+    ```
+
+* Install bundle
+
+    ```
+    duffle install --credentials=azure spring-music spring-music:0.1.0
+    ```

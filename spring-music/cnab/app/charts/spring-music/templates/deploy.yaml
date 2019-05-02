@@ -31,4 +31,4 @@ spec:
         - name: SPRING_PROFILES_ACTIVE
           value: cosmosdb
         - name: COSMOSDB_URI
-          value: "{{.Values.deploy.cosmosConnectString}}"
+          value: {{.Values.deploy.cosmosConnectString}}
