@@ -1,6 +1,8 @@
 # Spring Music Demo App with Azure Cosmos DB
 
-## Prerequistes
+This CNAB bundle is designed to be installed with Duffle.
+
+### Prerequistes
 
 - Duffle on local machine. https://github.com/deislabs/duffle
 - Docker on local machine (eg - Docker for Mac)
@@ -13,7 +15,7 @@
 
 More details here: https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli?view=azure-cli-latest 
 
-## Build / Install this bundle
+### Build / Install this bundle
 
 * Setup duffle credential set
 

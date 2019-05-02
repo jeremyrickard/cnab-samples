@@ -1,7 +1,7 @@
 name: spring-music-bundle
 version: 0.1.0
 description: "Spring Music Demo app with Azure Cosmos DB"
-invocationImage: chzbrgr71/spring-music-installer:v2.53
+invocationImage: chzbrgr71/spring-music-installer:v2.75
 dockerfile: cnab/app/Dockerfile.base
 
 mixins:
@@ -10,29 +10,39 @@ mixins:
   - azure
 
 install:
+  - azure:
+      description: "Create AKS"
+      type: aks
+      name: "{{ bundle.parameters.aks-cluster-name }}"
+      resourceGroup: "{{ bundle.parameters.aks-resource-group }}"
+      parameters:
+        clusterName: "{{ bundle.parameters.aks-cluster-name }}"
+        servicePrincipalClientId: "{{ bundle.credentials.CLIENT_ID}}"
+        servicePrincipalClientSecret: "{{ bundle.credentials.CLIENT_SECRET}}"
+
   - exec: 
       description: "Azure CLI login"
       command: "az"
       arguments: 
         - "login" 
         - "--service-principal"
-        - "--username"
+        - "--username" 
         - "{{ bundle.credentials.CLIENT_ID}}"
         - "--password" 
-        - "{{ bundle.credentials.CLIENT_SECRET}}" 
+        - "{{ bundle.credentials.CLIENT_SECRET}}"
         - "--tenant" 
         - "{{ bundle.credentials.TENANT_ID}}"
 
   - exec: 
-      description: "Azure CLI create resource group"
+      description: "Azure CLI AKS get-credentials"
       command: "az"
       arguments: 
-        - "group" 
-        - "create" 
-        - "-n" 
-        - "{{ bundle.parameters.app-resource-group }}"
-        - "-l"
-        - "{{ bundle.parameters.azure-location }}"
+        - "aks" 
+        - "get-credentials" 
+        - "--resource-group" 
+        - "{{ bundle.parameters.aks-resource-group }}"
+        - "--name"
+        - "{{ bundle.parameters.aks-cluster-name }}"
 
 uninstall:
   - exec:
@@ -58,14 +68,19 @@ parameters:
   default: spring-music-demo
   destination:
     env: APP_RESOURCE_GROUP
+- name: aks-resource-group
+  type: string
+  default: spring-music-demo
+  destination:
+    env: AKS_RESOURCE_GROUP
 - name: aks-cluster-name
   type: string
-  default: briar-aks-spring-01
+  default: briar-aks-spring-300
   destination:
     env: AKS_CLUSTER_NAME
 - name: cosmosdb-service-name
   type: string
-  default: briarspringmusic105
+  default: briarspringmusic300
   destination:
     env: COSMOSDB_SERVICE_NAME
 - name: azure-location
