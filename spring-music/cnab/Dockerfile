@@ -1,20 +1,21 @@
-FROM alpine:latest
+FROM debian:stretch
 
 ENV HELM_LATEST_VERSION="v2.12.3"
 
-# install helm and azure-cli
-RUN apk add --update ca-certificates \
- && apk add --update -t deps wget \
- && wget https://storage.googleapis.com/kubernetes-helm/helm-${HELM_LATEST_VERSION}-linux-amd64.tar.gz \
- && tar -xvf helm-${HELM_LATEST_VERSION}-linux-amd64.tar.gz \
- && mv linux-amd64/helm /usr/local/bin \
- && rm -f /helm-${HELM_LATEST_VERSION}-linux-amd64.tar.gz \
- && apk add bash py-pip \
- && apk add --virtual=build gcc libffi-dev musl-dev openssl-dev python-dev make \
- && pip install --upgrade pip \
- && pip install azure-cli \
- && apk del --purge deps \
- && rm /var/cache/apk/*
+# install helm, kubectl, azure-cli
+RUN apt-get update -y \
+    && apt-get install curl apt-transport-https lsb-release gnupg -y \
+    && curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/microsoft.asc.gpg > /dev/null \
+    && AZ_REPO=$(lsb_release -cs) && echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | tee /etc/apt/sources.list.d/azure-cli.list \
+    && apt-get update && apt-get install azure-cli \
+    && apt-get update && apt-get install -y apt-transport-https \
+    && curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - \
+    && echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | tee -a /etc/apt/sources.list.d/kubernetes.list \
+    && apt-get update \
+    && apt-get install -y kubectl \
+    && curl -LO https://git.io/get_helm.sh \
+    && chmod 700 get_helm.sh \
+    && ./get_helm.sh
 
 COPY app/ /cnab/app/
 COPY Dockerfile cnab/Dockerfile
