@@ -1,7 +1,7 @@
 name: spring-music-bundle
 version: 0.1.0
 description: "Spring Music Demo app with Azure Cosmos DB"
-invocationImage: chzbrgr71/spring-music-installer:v2.75
+invocationImage: chzbrgr71/spring-music-installer:v2.75 
 dockerfile: cnab/app/Dockerfile.base
 
 mixins:
@@ -16,6 +16,7 @@ install:
       name: "{{ bundle.parameters.aks-cluster-name }}"
       resourceGroup: "{{ bundle.parameters.aks-resource-group }}"
       parameters:
+        location: "{{ bundle.parameters.azure-location}}"
         clusterName: "{{ bundle.parameters.aks-cluster-name }}"
         servicePrincipalClientId: "{{ bundle.credentials.CLIENT_ID}}"
         servicePrincipalClientSecret: "{{ bundle.credentials.CLIENT_SECRET}}"
